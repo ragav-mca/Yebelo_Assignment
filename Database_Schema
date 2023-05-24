@@ -1,0 +1,7 @@
+Defining the Database Schema
+
+CREATE TABLE NumberTable (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  category_code VARCHAR(50) NOT NULL,
+  value INT NOT NULL
+);
