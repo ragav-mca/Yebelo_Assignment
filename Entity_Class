@@ -1,0 +1,19 @@
+Creating the Entity Class:-
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "NumberTable")
+public class Number {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "category_code")
+    private String categoryCode;
+
+    @Column(name = "value")
+    private int value;
+
+    // Getters and setters
+}
