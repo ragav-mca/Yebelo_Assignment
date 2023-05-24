@@ -1,0 +1,31 @@
+Creating a table in mysql using Database Connection.
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class CreateTableExample {
+    public static void main(String[] args) {
+        // Database connection details
+        String url = "jdbc:mysql://localhost:3306/your_database_name";
+        String username = "your_username";
+        String password = "your_password";
+
+        // SQL statement to create the table
+        String sql = "CREATE TABLE NumberTable (" +
+                "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                "category_code VARCHAR(50) NOT NULL, " +
+                "value INT NOT NULL" +
+                ")";
+
+        // Create a connection, statement, and execute the SQL
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(sql);
+            System.out.println("Table created successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
