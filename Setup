@@ -1,0 +1,3 @@
+Step 1: Creating the new java java project
+Step 2: Adding the dependencies for building the Rest API, such as Spring Boot and Spring Data JPA.
+Step 3: Then setting up a database connection in the application configuration file 
