@@ -1,0 +1,55 @@
+Implementing the Rest Controller:-
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
+
+@RestController
+@RequestMapping("/FetchNextNumber")
+public class NumberController {
+    @Autowired
+    private NumberRepository numberRepository;
+
+    @PostMapping
+    public NumberResponse fetchNextNumber(@RequestBody CategoryRequest categoryRequest) throws InterruptedException {
+        String categoryCode = categoryRequest.getCategoryCode();
+        Number number = numberRepository.findByCategoryCode(categoryCode);
+
+        int oldValue = number != null ? number.getValue() : 0;
+        int newValue = generateNextNumber(oldValue);
+
+        // Update the table with the new value
+        if (number != null) {
+            number.setValue(newValue);
+        } else {
+            number = new Number();
+            number.setCategoryCode(categoryCode);
+            number.setValue(newValue);
+        }
+        numberRepository.save(number);
+
+        // Simulate delay of 5 seconds
+        TimeUnit.SECONDS.sleep(5);
+
+        return new NumberResponse(oldValue, newValue);
+        }
+
+    private int generateNextNumber(int oldValue) {
+        // Logic to generate the next number satisfying the requirements
+        int nextNumber = oldValue + 1;
+        while (sumOfDigits(nextNumber) != 1) {
+            nextNumber++;
+        }
+        return nextNumber;
+    }
+
+    private int sumOfDigits(int number) {
+        int sum = 0;
+        while (number > 0) {
+            sum += number % 10;
+            number /= 10;
+        }
+        return sum;
+    }
+}
